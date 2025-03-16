@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@sapphire/framework": "^5.3.2",
+    "discord.js": "^14.18.0"
+  }
+}
