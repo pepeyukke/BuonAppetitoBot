@@ -1,2 +1,2 @@
-# buonAppetitoBot
+# BuonAppetitoBot
 ぺぺ鯖によるぺぺ鯖のためのぺぺ鯖に尽くすためのぺぺ鯖のメイドのようなボット
