@@ -21,6 +21,6 @@ export class PingCommand extends Command {
             return interaction.editReply(`Pong 🏓! (往復にかかった時間: ${diff}ms. ハートビート: ${ping}ms.)`);
         }
 
-        return interaction.editReply('ping を取得できませんでした :(');
+        return await interaction.editReply('ping を取得できませんでした :(');
     }
 }
