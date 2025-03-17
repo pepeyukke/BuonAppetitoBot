@@ -8,7 +8,7 @@ export class PingCommand extends Command {
 
     public override registerApplicationCommands(registry: Command.Registry) {
         registry.registerChatInputCommand((builder) =>
-            builder.setName('ping').setDescription('Ping bot to see if it is alive')
+            builder.setName('ping').setDescription('ボットが動作しているかどうかを確認するためにpingを送信します。')
         );
     }
 
@@ -18,9 +18,9 @@ export class PingCommand extends Command {
         if (isMessageInstance(msg)) {
             const diff = msg.createdTimestamp - interaction.createdTimestamp;
             const ping = Math.round(this.container.client.ws.ping);
-            return interaction.editReply(`Pong 🏓! (Round trip took: ${diff}ms. Heartbeat: ${ping}ms.)`);
+            return interaction.editReply(`Pong 🏓! (往復にかかった時間: ${diff}ms. ハートビート: ${ping}ms.)`);
         }
 
-        return interaction.editReply('Failed to retrieve ping :(');
+        return interaction.editReply('ping を取得できませんでした :(');
     }
 }
