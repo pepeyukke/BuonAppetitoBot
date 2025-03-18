@@ -13,6 +13,7 @@ export class ReadyListener extends Listener {
     }
 
     public async run(message: Message) {
+        console.log(message.content)
         // bump通知を実行するかの判定
         if (!message.guild) return;
         if (message.guildId != config.guildId) return;
