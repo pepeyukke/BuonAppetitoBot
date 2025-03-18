@@ -13,6 +13,7 @@ export class ReadyListener extends Listener {
     }
 
     public async run(message: Message) {
+        // bump通知を実行するかの判定
         if (!message.guild) return;
         if (message.guildId != config.guildId) return;
         if (message.author.id != config.noticeBump.disboardUserId) return;
@@ -21,6 +22,7 @@ export class ReadyListener extends Listener {
         if (!botMessageEmbed.description) return;
         if (!botMessageEmbed.description.includes("表示順をアップしたよ")) return;
 
+        // 実行された通知のEmbed作成
         const executeEmbed = new EmbedBuilder()
             .setColor(0x28b463)
             .setTitle("「</bump:947088344167366698>」が実行されました！")
@@ -32,6 +34,15 @@ export class ReadyListener extends Listener {
         // @ts-ignore
         await message.channel.send({embeds: [executeEmbed]});
         await sleep(2);
+
+        const noticeEmbed = new EmbedBuilder()
+            .setColor(0x28b463)
+            .setTitle("「</bump:947088344167366698>」が実行可能になりました！")
+            .setDescription("↑クリックして実行！")
+        const noticeRole = message.guild.roles.cache.get(config.noticeBump.bumpRoleId)
+
+        // @ts-ignore
+        return await message.channel.send({content: `<@&${noticeRole?.id}>`, embeds: [noticeEmbed]});
     }
 }
 
@@ -52,6 +63,7 @@ function formatNextBump(date: Date): string {
     return `${formattedHours}時${formattedMinutes}分${formattedSeconds}秒`;
 }
 
+// sleep関数
 function sleep(hours: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, hours * 60 * 60 * 1000));
 }
