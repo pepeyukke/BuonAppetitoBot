@@ -20,7 +20,7 @@ export class ReadyListener extends Listener {
         if (!message.embeds) return;
         const botMessageEmbed = message.embeds[0];
         if (!botMessageEmbed.description) return;
-        if (!botMessageEmbed.description.includes("pepesexsiyo")) return;
+        if (!botMessageEmbed.description.includes("表示順をアップしたよ")) return;
 
         // 実行された通知のEmbed作成
         const executeEmbed = new EmbedBuilder()
