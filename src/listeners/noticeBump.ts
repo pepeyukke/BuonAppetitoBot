@@ -7,7 +7,7 @@ export class ReadyListener extends Listener {
     public constructor(context: Listener.LoaderContext, options: Listener.Options) {
         super(context, {
             ...options,
-            once: true,
+            once: false,
             event: 'messageCreate'
         });
     }
@@ -20,7 +20,7 @@ export class ReadyListener extends Listener {
         if (!message.embeds) return;
         const botMessageEmbed = message.embeds[0];
         if (!botMessageEmbed.description) return;
-        if (!botMessageEmbed.description.includes("表示順をアップしたよ")) return;
+        if (!botMessageEmbed.description.includes("pepesexsiyo")) return;
 
         // 実行された通知のEmbed作成
         const executeEmbed = new EmbedBuilder()
@@ -38,7 +38,7 @@ export class ReadyListener extends Listener {
         const noticeEmbed = new EmbedBuilder()
             .setColor(0x28b463)
             .setTitle("「</bump:947088344167366698>」が実行可能になりました！")
-            .setDescription("↑クリックして実行！")
+            .setDescription("クリックして実行！")
         const noticeRole = message.guild.roles.cache.get(config.noticeBump.bumpRoleId)
 
         // @ts-ignore
