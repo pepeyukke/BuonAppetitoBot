@@ -34,6 +34,7 @@ export class ReadyListener extends Listener {
                 {name: "次回実行可能になる日時", value: formatNextBump(calculateNextBump())}
             )
 
+        // チャンネルに送信可能か
         if (!message.channel.isSendable()) return;
 
         await message.channel.send({embeds: [executeEmbed]});
