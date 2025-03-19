@@ -1,5 +1,6 @@
 import {isMessageInstance} from '@sapphire/discord.js-utilities';
 import {Command} from '@sapphire/framework';
+import config from "../../config.json";
 
 export class PingCommand extends Command {
     public constructor(context: Command.LoaderContext, options: Command.Options) {
@@ -13,6 +14,13 @@ export class PingCommand extends Command {
     }
 
     public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
+        if (!interaction.guild) {
+            await interaction.reply({content: "このコマンドはサーバーでのみ使用できます。", ephemeral: true});
+        }
+        if (interaction.guildId != config.guildId) {
+            await interaction.reply({content: "このコマンドは指定のサーバーでのみ使用できます。", ephemeral: true});
+        }
+
         const msg = await interaction.reply({content: `Ping?`, ephemeral: true, fetchReply: true});
 
         if (isMessageInstance(msg)) {
