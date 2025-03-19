@@ -1,6 +1,7 @@
 import {Listener} from '@sapphire/framework';
 import {Message, EmbedBuilder} from "discord.js";
 import config from "../../config.json";
+import {sleep} from "../utils/sleep";
 
 
 export class ReadyListener extends Listener {
@@ -13,7 +14,6 @@ export class ReadyListener extends Listener {
     }
 
     public async run(message: Message) {
-        console.log(message.content)
         // bump通知を実行するかの判定
         if (!message.guild) return;
         if (message.guildId != config.guildId) return;
@@ -34,7 +34,7 @@ export class ReadyListener extends Listener {
 
         // @ts-ignore
         await message.channel.send({embeds: [executeEmbed]});
-        await sleep(2);
+        await sleep(2* 60 * 60 * 1000);
 
         const noticeEmbed = new EmbedBuilder()
             .setColor(0x28b463)
@@ -64,7 +64,3 @@ function formatNextBump(date: Date): string {
     return `${formattedHours}時${formattedMinutes}分${formattedSeconds}秒`;
 }
 
-// sleep関数
-function sleep(hours: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, hours * 60 * 60 * 1000));
-}
