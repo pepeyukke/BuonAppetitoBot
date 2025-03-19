@@ -1,7 +1,9 @@
 import {Listener} from '@sapphire/framework';
 import {Message, EmbedBuilder} from "discord.js";
-import config from "../../config.json";
+
 import {sleep} from "../utils/sleep";
+
+import config from "../../config.json";
 
 
 export class ReadyListener extends Listener {

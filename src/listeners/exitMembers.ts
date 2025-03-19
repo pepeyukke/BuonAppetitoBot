@@ -1,8 +1,10 @@
 import {Listener} from "@sapphire/framework";
 import {EmbedBuilder, GuildMember, PartialGuildMember} from "discord.js";
-import config from "../../config.json";
+
 import {newUserMap} from "../userMap";
 import {date2Timestamp} from "../utils/dateUtil";
+
+import config from "../../config.json";
 
 export class ExitGuildMember extends Listener {
     public constructor(context: Listener.LoaderContext, options: Listener.Options) {

@@ -1,8 +1,10 @@
 import {Listener} from "@sapphire/framework";
 import {EmbedBuilder, GuildMember, Snowflake} from "discord.js";
-import config from "../../config.json";
+
 import {newUserMap} from "../userMap";
 import {sleep} from "../utils/sleep";
+
+import config from "../../config.json";
 
 export class JoinGuildMember extends Listener {
     public constructor(context: Listener.LoaderContext, options: Listener.Options) {
