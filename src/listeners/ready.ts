@@ -11,7 +11,7 @@ export class ReadyListener extends Listener {
     }
 
     public run(client: Client) {
-        const { username, id } = client.user!;
+        const {username, id} = client.user!;
         this.container.logger.info(`Logged in as ${username} (${id})`);
     }
 }

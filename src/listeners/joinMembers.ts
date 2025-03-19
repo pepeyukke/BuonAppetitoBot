@@ -15,10 +15,10 @@ export class JoinGuildMember extends Listener {
 
     public async run(member: GuildMember) {
         console.log(member)
-        if(member.guild.id != config.guildId) return
+        if (member.guild.id != config.guildId) return
 
         const joinTime = member.joinedTimestamp
-        if(joinTime == null) {
+        if (joinTime == null) {
             console.log(`Can't get Member(id: ${member.id}) JoinTime.`)
             return
         }
@@ -26,7 +26,7 @@ export class JoinGuildMember extends Listener {
             .setColor("Aqua")
             .setThumbnail(member.avatarURL() || "https://archive.org/download/discordprofilepictures/discordblue.png")
             .setTitle(`こんにちは！${member.displayName}さん！${member.guild.name}へようこそ！`)
-            .setFields({name: "あなたが参加した時刻", value: `<t:${Math.round(joinTime/1000.0)}:F>`})
+            .setFields({name: "あなたが参加した時刻", value: `<t:${Math.round(joinTime / 1000.0)}:F>`})
 
         await member.guild.systemChannel?.send({embeds: [embed]})
         newUserMap.set(member.id, joinTime)

@@ -32,10 +32,10 @@ export class ReadyListener extends Listener {
                 {name: "次回実行可能になる日時", value: formatNextBump(calculateNextBump())}
             )
 
-        if(!message.channel.isSendable()) return
+        if (!message.channel.isSendable()) return;
 
         await message.channel.send({embeds: [executeEmbed]});
-        await sleep(2* 60 * 60 * 1000);
+        await sleep(2 * 60 * 60 * 1000);
 
         const noticeEmbed = new EmbedBuilder()
             .setColor(0x28b463)
@@ -63,4 +63,3 @@ function formatNextBump(date: Date): string {
 
     return `${formattedHours}時${formattedMinutes}分${formattedSeconds}秒`;
 }
-

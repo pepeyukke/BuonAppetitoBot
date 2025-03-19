@@ -38,7 +38,10 @@ export class AvatarsCommand extends Command {
             .setColor(0xffffff)
             .setTitle(user.displayName)
             .setImage(user.displayAvatarURL({size: 4096}))
-            .setFooter({text: `リクエスト元: ${interaction.user.displayName}`, iconURL: interaction.user.displayAvatarURL()})
+            .setFooter({
+                text: `リクエスト元: ${interaction.user.displayName}`,
+                iconURL: interaction.user.displayAvatarURL()
+            })
 
         return await interaction.reply({ephemeral: true, embeds: [embed]});
     }
