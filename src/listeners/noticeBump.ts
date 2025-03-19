@@ -1,6 +1,7 @@
 import {Listener} from '@sapphire/framework';
 import {Message, EmbedBuilder} from "discord.js";
 import config from "../../config.json";
+import {sleep} from "../utils/sleep";
 
 
 export class ReadyListener extends Listener {
@@ -31,9 +32,10 @@ export class ReadyListener extends Listener {
                 {name: "次回実行可能になる日時", value: formatNextBump(calculateNextBump())}
             )
 
-        // @ts-ignore
+        if(!message.channel.isSendable()) return
+
         await message.channel.send({embeds: [executeEmbed]});
-        await sleep(2);
+        await sleep(2* 60 * 60 * 1000);
 
         const noticeEmbed = new EmbedBuilder()
             .setColor(0x28b463)
@@ -41,7 +43,6 @@ export class ReadyListener extends Listener {
             .setDescription("クリックして実行！")
         const noticeRole = message.guild.roles.cache.get(config.noticeBump.bumpRoleId)
 
-        // @ts-ignore
         return await message.channel.send({content: `<@&${noticeRole?.id}>`, embeds: [noticeEmbed]});
     }
 }
@@ -63,7 +64,3 @@ function formatNextBump(date: Date): string {
     return `${formattedHours}時${formattedMinutes}分${formattedSeconds}秒`;
 }
 
-// sleep関数
-function sleep(hours: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, hours * 60 * 60 * 1000));
-}
