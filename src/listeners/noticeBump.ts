@@ -32,7 +32,8 @@ export class ReadyListener extends Listener {
                 {name: "次回実行可能になる日時", value: formatNextBump(calculateNextBump())}
             )
 
-        // @ts-ignore
+        if(!message.channel.isSendable()) return
+
         await message.channel.send({embeds: [executeEmbed]});
         await sleep(2* 60 * 60 * 1000);
 
@@ -42,7 +43,6 @@ export class ReadyListener extends Listener {
             .setDescription("クリックして実行！")
         const noticeRole = message.guild.roles.cache.get(config.noticeBump.bumpRoleId)
 
-        // @ts-ignore
         return await message.channel.send({content: `<@&${noticeRole?.id}>`, embeds: [noticeEmbed]});
     }
 }
