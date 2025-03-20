@@ -5,7 +5,14 @@ export function commandLog(name: string, user: User): void {
     return console.log(`Executed command "${name}" by ${user.tag}[${user.id}]`);
 }
 
-export function logger(){}
+/*
+loggerの使い方
+logger関数をimportしたら使えます。
+e.g ->
+    logger.info("some messages here.") //info message.
+ */
+
+export function logger() {}
 
 logger.date = ()=> {
     const dateFormat = Intl.DateTimeFormat(
