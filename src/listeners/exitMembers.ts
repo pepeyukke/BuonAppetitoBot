@@ -33,7 +33,7 @@ export class ExitGuildMember extends Listener {
             )
             .setFooter({
                 text: `走者: ${member.displayName}`,
-                iconURL: member.avatarURL.toString() || config.defaultAvatarUrl
+                iconURL: member.displayAvatarURL.toString()
             })
 
         await member.guild.systemChannel?.send({embeds: [embed]})

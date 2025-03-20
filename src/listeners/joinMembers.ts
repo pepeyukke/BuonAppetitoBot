@@ -26,7 +26,7 @@ export class JoinGuildMember extends Listener {
         }
         const embed = new EmbedBuilder()
             .setColor("Aqua")
-            .setThumbnail(member.avatarURL() || config.defaultAvatarUrl)
+            .setThumbnail(member.displayAvatarURL())
             .setTitle(`こんにちは！${member.displayName}さん！${member.guild.name}へようこそ！`)
             .setFields({name: "あなたが参加した時刻", value: `<t:${Math.round(joinTime / 1000.0)}:F>`})
 
