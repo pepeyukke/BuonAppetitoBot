@@ -1,6 +1,6 @@
 {
   "name": "buon-appetito-bot",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "dependencies": {
     "@sapphire/cli": "^1.9.3",
     "@sapphire/decorators": "^6.1.1",
