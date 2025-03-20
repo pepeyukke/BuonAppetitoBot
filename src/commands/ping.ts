@@ -1,7 +1,7 @@
 import {Command} from '@sapphire/framework';
 import {MessageFlags} from "discord.js";
 
-import {commandLog} from "../utils/logs";
+import {commandLog, logger} from "../utils/logs";
 import {isMessageInstance} from '@sapphire/discord.js-utilities';
 
 import config from "../../config.json";
@@ -39,10 +39,10 @@ export class PingCommand extends Command {
             const diff = msg.createdTimestamp - interaction.createdTimestamp;
             const ping = Math.round(this.container.client.ws.ping);
             await interaction.editReply(`Pong 🏓! (往復にかかった時間: ${diff}ms. ハートビート: ${ping}ms.)`);
-            return console.log(`Executed "ping" command by ${interaction.user.tag} in ${diff}ms.`)
+            return logger.info(`Executed "ping" command by ${interaction.user.tag} in ${diff}ms.`)
         }
 
         await interaction.editReply('ping を取得できませんでした :(');
-        return console.log(`Failed to execute "ping" command by ${interaction.user.tag}.`)
+        return logger.error(`Failed to execute "ping" command by ${interaction.user.tag}.`)
     }
 }

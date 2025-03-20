@@ -1,10 +1,11 @@
 import {Listener} from "@sapphire/framework";
-import {EmbedBuilder, GuildMember, Snowflake} from "discord.js";
+import {EmbedBuilder, GuildMember} from "discord.js";
 
 import {newUserMap} from "../userMap";
 import {sleep} from "../utils/sleep";
 
 import config from "../../config.json";
+import {logger} from "../utils/logs";
 
 export class JoinGuildMember extends Listener {
     public constructor(context: Listener.LoaderContext, options: Listener.Options) {
@@ -16,12 +17,11 @@ export class JoinGuildMember extends Listener {
 
 
     public async run(member: GuildMember) {
-        console.log(member)
         if (member.guild.id != config.guildId) return
 
         const joinTime = member.joinedTimestamp
         if (joinTime == null) {
-            console.log(`Can't get Member(id: ${member.id}) JoinTime.`)
+            logger.info(`Can't get Member(id: ${member.id}) JoinTime.`)
             return
         }
         const embed = new EmbedBuilder()
@@ -32,15 +32,9 @@ export class JoinGuildMember extends Listener {
 
         await member.guild.systemChannel?.send({embeds: [embed]})
         newUserMap.set(member.id, joinTime)
-        console.log(newUserMap)
         await sleep(60 * 1000)
-        console.log(`1 minute passed. deleting Member(id: ${member.id}) joinTime...`)
+        logger.info(`1 minute passed. deleting Member(id: ${member.id}) joinTime...`)
         newUserMap.delete(member.id)
-        console.log("delete complete.")
+        logger.info("delete complete.")
     }
-}
-
-export function getUserMap(): Map<Snowflake, number> {
-    console.log(newUserMap)
-    return newUserMap
 }

@@ -5,6 +5,7 @@ import {newUserMap} from "../userMap";
 import {date2Timestamp} from "../utils/dateUtil";
 
 import config from "../../config.json";
+import {logger} from "../utils/logs";
 
 export class ExitGuildMember extends Listener {
     public constructor(context: Listener.LoaderContext, options: Listener.Options) {
@@ -20,7 +21,7 @@ export class ExitGuildMember extends Listener {
         const joinDate = newUserMap.get(member.id)
 
         if (joinDate == undefined) {
-            console.log(`Can't get Member(id: ${member.id}) join date.`)
+            logger.warn(`Can't get Member(id: ${member.id}) join date.`)
             return
         }
 
