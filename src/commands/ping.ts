@@ -18,7 +18,6 @@ export class PingCommand extends Command {
     }
 
     public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-        commandLog("ping", interaction.user)
 
         if (!interaction.guild) {
             return await interaction.reply({
