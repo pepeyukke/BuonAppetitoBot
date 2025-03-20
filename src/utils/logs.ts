@@ -2,7 +2,7 @@ import {User} from "discord.js";
 import {getCallSites} from "node:util";
 
 export function commandLog(name: string, user: User): void {
-    return console.log(`Executed command "${name}" by ${user.tag}[${user.id}]`);
+    return logger.info(`Executed command "${name}" by ${user.tag}[${user.id}]`);
 }
 
 /*
