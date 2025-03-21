@@ -28,7 +28,7 @@ export class ReadyListener extends Listener {
         // 実行された通知のEmbed作成
         const executeEmbed = new EmbedBuilder()
             .setColor(0x28b463)
-            .setTitle("「</bump:947088344167366698>」が実行されました！")
+            .setTitle("「/bump」が実行されました！")
             .addFields(
                 {name: "実行された日時", value: formatNextBump(new Date())},
                 {name: "次回実行可能になる日時", value: formatNextBump(calculateNextBump())}
