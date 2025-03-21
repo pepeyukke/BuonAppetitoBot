@@ -23,6 +23,9 @@ async function start(): Promise<void> {
     try {
         if (!fs.existsSync(databaseDirectory)) {
             fs.mkdirSync(databaseDirectory);
+            logger.info(`Created directory: ${databaseDirectory}`);
+        } else {
+            logger.info(`Directory already exists: ${databaseDirectory}`);
         }
     } catch (err) {
         return logger.error(`Error failed creating directory: "${err}"`);
@@ -44,8 +47,8 @@ async function start(): Promise<void> {
         }
     })
 
-    await createDatabase(path.join(databaseDirectory, "settings.sqlite"), createModeratorRoleTable, "settings.sqlite");
-    await createDatabase(path.join(databaseDirectory, "settings.sqlite"), createBumpRoleTable, "settings.sqlite");
+    await createTable(path.join(databaseDirectory, "settings.sqlite"), createModeratorRoleTable, "moderatorRole");
+    await createTable(path.join(databaseDirectory, "settings.sqlite"), createBumpRoleTable, "bumpRole");
 
     const token = process.env.BUON_APPETITO_TOKEN;
     if (!token) {
@@ -62,17 +65,20 @@ async function start(): Promise<void> {
 
 start();
 
-async function createDatabase(filePath: string, query: string, dbName: string) {
+async function createTable(filePath: string, query: string, tableName: string) {
     const db = new sqlite3.Database(filePath, (err) => {
         if (err) {
-            return logger.error(`Error creating database: "${err}"`);
+            db.close();
+            return logger.error(`Error failed connect database: "${err}"`);
         }
     });
     db.run(query, (err) => {
         if (err) {
-            return logger.error(`Error creating database: "${err}"`);
+            db.close();
+            return logger.error(`Error creating table: "${err}"`);
         } else {
-            return logger.info(`Created database: ${dbName}`);
+            db.close();
+            return logger.info(`Created table: ${tableName}`);
         }
     });
 }
