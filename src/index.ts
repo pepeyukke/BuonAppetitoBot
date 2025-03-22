@@ -4,19 +4,7 @@ import path from "node:path";
 import fs from "node:fs";
 import sqlite3 from "sqlite3"
 import {logger} from "./utils/logs";
-
-const createModeratorRoleTable = `
-CREATE TABLE IF NOT EXISTS moderatorRole (
-    guildId TEXT NOT NULL,
-    roleId TEXT NOT NULL
-);
-`
-const createBumpRoleTable = `
-CREATE TABLE IF NOT EXISTS bumpRole (
-    guildId TEXT NOT NULL,
-    roleId TEXT NOT NULL
-)
-`
+import {executeRunQuery} from "./utils/database"
 
 async function start(): Promise<void> {
     const databaseDirectory = path.join(__dirname, "..", "database");
@@ -36,7 +24,11 @@ async function start(): Promise<void> {
         try {
             const filePath = path.join(databaseDirectory, fileName);
             if (!fs.existsSync(filePath)) {
-                const db = new sqlite3.Database(filePath);
+                const db = new sqlite3.Database(filePath, (err) => {
+                    if (err) {
+                        return logger.error(`Error failed connect database: "${err}"`);
+                    }
+                });
                 db.close()
                 logger.info(`Created database file: ${filePath}`);
             } else {
@@ -47,8 +39,23 @@ async function start(): Promise<void> {
         }
     })
 
-    await createTable(path.join(databaseDirectory, "settings.sqlite"), createModeratorRoleTable, "moderatorRole");
-    await createTable(path.join(databaseDirectory, "settings.sqlite"), createBumpRoleTable, "bumpRole");
+    const createModeratorRoleTable = `
+    CREATE TABLE IF NOT EXISTS moderatorRole
+    (
+        guildId TEXT NOT NULL,
+        roleId TEXT NOT NULL
+    );
+    `
+    const createBumpRoleTable = `
+    CREATE TABLE IF NOT EXISTS bumpRole
+    (
+        guildId TEXT NOT NULL,
+        roleId TEXT NOT NULL
+    )
+    `
+
+    await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createModeratorRoleTable);
+    await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createBumpRoleTable);
 
     const token = process.env.BUON_APPETITO_TOKEN;
     if (!token) {
@@ -64,21 +71,3 @@ async function start(): Promise<void> {
 }
 
 start();
-
-async function createTable(filePath: string, query: string, tableName: string) {
-    const db = new sqlite3.Database(filePath, (err) => {
-        if (err) {
-            db.close();
-            return logger.error(`Error failed connect database: "${err}"`);
-        }
-    });
-    db.run(query, (err) => {
-        if (err) {
-            db.close();
-            return logger.error(`Error creating table: "${err}"`);
-        } else {
-            db.close();
-            return logger.info(`Created table: ${tableName}`);
-        }
-    });
-}
