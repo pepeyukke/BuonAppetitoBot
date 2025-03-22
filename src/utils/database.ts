@@ -3,7 +3,7 @@ import {logger} from "./logs";
 
 export async function executeGetQuery(dbPath: string, query: string, params: any[] = []): Promise<any | undefined> {
     return new Promise<any | undefined>((resolve, reject) => {
-        const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
+        const db = new sqlite3.Database(dbPath, (err) => {
             if (err) {
                 logger.error(`Error failed connect database: "${err}"`);
                 reject(err);
