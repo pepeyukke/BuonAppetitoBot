@@ -25,7 +25,7 @@ export async function executeGetQuery(dbPath: string, query: string, params: any
 
 export async function executeRunQuery(dbPath: string, query: string, params: any[] = []): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-        const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
+        const db = new sqlite3.Database(dbPath, (err) => {
             if (err) {
                 reject(err);
                 logger.error(`Error failed connect database: "${err}"`);
