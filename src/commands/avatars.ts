@@ -1,10 +1,8 @@
 import {ApplicationCommandRegistry, Command} from "@sapphire/framework";
 import {EmbedBuilder} from "discord.js";
 import {MessageFlags} from "discord.js";
-
-import {commandLog} from "../utils/logs";
-
-import config from "../../config.json"
+import {checkGuild} from "../utils/checkGuild";
+import {logger} from "../utils/logs";
 
 export class AvatarsCommand extends Command {
     public constructor(context: Command.LoaderContext, options: Command.Options) {
@@ -26,20 +24,7 @@ export class AvatarsCommand extends Command {
     }
 
     public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-        commandLog("avatars", interaction.user)
-
-        if (!interaction.guild) {
-            return await interaction.reply({
-                content: "このコマンドはサーバーでのみ使用できます。",
-                flags: [MessageFlags.Ephemeral]
-            });
-        }
-        if (interaction.guildId != config.guildId) {
-            return await interaction.reply({
-                content: "このコマンドは指定のサーバーでのみ使用できます。",
-                flags: [MessageFlags.Ephemeral]
-            });
-        }
+        if (!await checkGuild(interaction)) return;
 
         let user = interaction.options.getUser('user');
         if (!user) {
@@ -55,6 +40,7 @@ export class AvatarsCommand extends Command {
                 iconURL: interaction.user.displayAvatarURL()
             })
 
-        return await interaction.reply({flags: [MessageFlags.Ephemeral], embeds: [embed]});
+        await interaction.reply({flags: [MessageFlags.Ephemeral], embeds: [embed]});
+        return logger.info(`Executed "avatars" command by ${interaction.user.tag}.`);
     }
 }

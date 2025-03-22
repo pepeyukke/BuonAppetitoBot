@@ -1,10 +1,7 @@
 import {Command} from '@sapphire/framework';
 import {MessageFlags} from "discord.js";
-
-import {commandLog, logger} from "../utils/logs";
+import {logger} from "../utils/logs";
 import {isMessageInstance} from '@sapphire/discord.js-utilities';
-
-import config from "../../config.json";
 
 export class PingCommand extends Command {
     public constructor(context: Command.LoaderContext, options: Command.Options) {
@@ -18,20 +15,6 @@ export class PingCommand extends Command {
     }
 
     public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-
-        if (!interaction.guild) {
-            return await interaction.reply({
-                content: "このコマンドはサーバーでのみ使用できます。",
-                flags: [MessageFlags.Ephemeral]
-            });
-        }
-        if (interaction.guildId != config.guildId) {
-            return await interaction.reply({
-                content: "このコマンドは指定のサーバーでのみ使用できます。",
-                flags: [MessageFlags.Ephemeral]
-            });
-        }
-
         const msg = await interaction.reply({content: `Ping?`, flags: [MessageFlags.Ephemeral], fetchReply: true});
 
         if (isMessageInstance(msg)) {
@@ -42,6 +25,6 @@ export class PingCommand extends Command {
         }
 
         await interaction.editReply('ping を取得できませんでした :(');
-        return logger.error(`Failed to execute "ping" command by ${interaction.user.tag}.`)
+        return logger.warn(`Failed to execute "ping" command by ${interaction.user.tag}.`)
     }
 }
