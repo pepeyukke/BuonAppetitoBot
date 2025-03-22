@@ -1,7 +1,6 @@
 import {Listener} from "@sapphire/framework";
 import {EmbedBuilder, GuildMember, PartialGuildMember} from "discord.js";
 
-import {newUserMap} from "../userMap";
 import {date2Timestamp} from "../utils/dateUtil";
 
 import config from "../../config.json";
@@ -18,26 +17,27 @@ export class ExitGuildMember extends Listener {
     public async run(member: GuildMember | PartialGuildMember) {
         if (member.guild.id != config.guildId) return
         const date = new Date().getTime()
-        const joinDate = newUserMap.get(member.id)
+        const joinDate = member.joinedTimestamp
 
-        if (joinDate == undefined) {
-            logger.warn(`Can't get Member(id: ${member.id}) join date.`)
+        if (joinDate == null) {
+            logger.error(`Can't get Member(id: ${member.id}) join time.`)
             return
+        }
+        const rtaTime = joinDate - date
+        if(60 <= rtaTime) {
+            logger.info(`Member(id: ${member.id}) is not RTA Player.`)
         }
 
         const embed = new EmbedBuilder()
             .setColor("Yellow")
+            .setThumbnail(member.displayAvatarURL())
             .setTitle("即抜けRTA!")
             .addFields(
+                {name: "走者: ", value: `${member.displayName}(id: ${member.id})`},
                 {name: "記録: ", value: `${(date - joinDate) / 1000}秒！`},
                 {name: "参加時刻/退出時刻", value: `${date2Timestamp(joinDate, "T")}/${date2Timestamp(date, "T")}`}
             )
-            .setFooter({
-                text: `走者: ${member.displayName}`,
-                iconURL: member.displayAvatarURL.toString()
-            })
 
         await member.guild.systemChannel?.send({embeds: [embed]})
     }
 }
-

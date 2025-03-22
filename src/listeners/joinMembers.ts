@@ -1,9 +1,5 @@
 import {Listener} from "@sapphire/framework";
 import {EmbedBuilder, GuildMember} from "discord.js";
-
-import {newUserMap} from "../userMap";
-import {sleep} from "../utils/sleep";
-
 import config from "../../config.json";
 import {logger} from "../utils/logs";
 
@@ -31,10 +27,5 @@ export class JoinGuildMember extends Listener {
             .setFields({name: "あなたが参加した時刻", value: `<t:${Math.round(joinTime / 1000.0)}:F>`})
 
         await member.guild.systemChannel?.send({embeds: [embed]})
-        newUserMap.set(member.id, joinTime)
-        await sleep(60 * 1000)
-        logger.info(`1 minute passed. deleting Member(id: ${member.id}) joinTime...`)
-        newUserMap.delete(member.id)
-        logger.info("delete complete.")
     }
 }
