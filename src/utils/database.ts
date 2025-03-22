@@ -1,7 +1,7 @@
 import sqlite3 from "sqlite3";
 import {logger} from "./logs";
 
-async function executeGetQuery(dbPath: string, query: string, params: any[] = []): Promise<any | undefined> {
+export async function executeGetQuery(dbPath: string, query: string, params: any[] = []): Promise<any | undefined> {
     return new Promise<any | undefined>((resolve, reject) => {
         const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
             if (err) {
@@ -23,7 +23,7 @@ async function executeGetQuery(dbPath: string, query: string, params: any[] = []
 }
 
 
-async function executeRunQuery(dbPath: string, query: string, params: any[] = []): Promise<void> {
+export async function executeRunQuery(dbPath: string, query: string, params: any[] = []): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {
             if (err) {
