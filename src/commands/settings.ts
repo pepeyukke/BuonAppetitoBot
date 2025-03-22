@@ -2,7 +2,7 @@ import {Subcommand} from "@sapphire/plugin-subcommands";
 import {MessageFlags, PermissionFlagsBits} from "discord.js";
 import {logger} from "../utils/logs";
 import {checkGuild} from "../utils/checkGuild";
-import sqlite3 from "sqlite3";
+import {executeRunQuery} from "../utils/database";
 
 
 export class SettingsCommand extends Subcommand {
@@ -51,6 +51,14 @@ export class SettingsCommand extends Subcommand {
             return logger.info(`Failed execute "moderator_role" command by ${interaction.user.tag}. Reason: "role option is empty.`);
         }
 
-
+        const insertModeratorRoleQuery = `
+            INSERT INTO moderatorRole VALUES (?, ?);
+        `
+        await executeRunQuery("../database/settings.sqlite", insertModeratorRoleQuery, [interaction.guildId, role.id]);
+        await interaction.reply({
+            content: `モデレーターロールとして**${role.name}**を登録しました`,
+            flags: [MessageFlags.Ephemeral]
+        })
+        return logger.info(`Executed "moderator_role" command by ${interaction.user.tag}.`);
     }
 }
