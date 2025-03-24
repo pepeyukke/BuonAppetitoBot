@@ -24,11 +24,11 @@ export class ReadyListener extends Listener {
         const messageChannel = await guild.channels.fetch(config.audit.message.deleteLogID)
 
         if(!messageChannel) {
-            logger.error(`Failed to fetch channel.(guild: ${guild.id}, channel: ${config.audit.message.createLogId})`)
+            logger.error(`Failed to fetch channel.(guild: ${guild.id}, channel: ${config.audit.message.deleteLogID})`)
             return
         }
         if(!messageChannel.isSendable()) {
-            logger.error(`MessageChannel(id: ${config.audit.message.createLogId}) is not senddable message. Check bot and channel Permissions.`)
+            logger.error(`MessageChannel(id: ${config.audit.message.deleteLogID}) is not senddable message. Check bot and channel Permissions.`)
             return
         }
         await messageChannel.send({embeds: [await embedMaker(message, MessageTypes.DELETE)]})
