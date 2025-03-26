@@ -38,11 +38,21 @@ export class SettingsCommand extends Command {
             .setTitle("設定")
             .addFields(
                 {
+                  name: "一般",
+                  value: "全般的な設定を行います。",
+                  inline: true
+                },
+                {
                     name: "サポート",
                     value: "サポート機能に関する設定をします。",
                     inline: true
                 }
             )
+
+        const generalButton = new ButtonBuilder()
+            .setCustomId("settings:general")
+            .setLabel("一般")
+            .setStyle(ButtonStyle.Primary)
 
         const supportButton = new ButtonBuilder()
             .setCustomId("settings:support")
@@ -50,7 +60,7 @@ export class SettingsCommand extends Command {
             .setStyle(ButtonStyle.Primary)
 
         const row = new ActionRowBuilder<ButtonBuilder>()
-            .addComponents(supportButton)
+            .addComponents(generalButton, supportButton)
 
         await interaction.reply({
             content: "",
