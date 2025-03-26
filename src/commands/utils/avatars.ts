@@ -1,7 +1,7 @@
 import {ApplicationCommandRegistry, Command} from "@sapphire/framework";
 import {EmbedBuilder} from "discord.js";
 import {MessageFlags} from "discord.js";
-import {logger} from "../utils/logs";
+import {logger} from "../../utils/logs";
 
 export class AvatarsCommand extends Command {
     public constructor(context: Command.LoaderContext, options: Command.Options) {

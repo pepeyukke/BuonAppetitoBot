@@ -1,9 +1,9 @@
 import {Listener} from '@sapphire/framework';
 import {Events, Message} from "discord.js";
 
-import config from "../../config.json";
-import {logger} from "../utils/logs";
-import {embedMaker, MessageTypes} from "../utils/messageUtil";
+import config from "../../../config.json";
+import {logger} from "../../utils/logs";
+import {embedMaker, MessageTypes} from "../../utils/messageUtil";
 
 
 export class ReadyListener extends Listener {

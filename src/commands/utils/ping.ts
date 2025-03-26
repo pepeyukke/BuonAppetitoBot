@@ -1,6 +1,6 @@
 import {Command} from '@sapphire/framework';
 import {MessageFlags} from "discord.js";
-import {logger} from "../utils/logs";
+import {logger} from "../../utils/logs";
 import {isMessageInstance} from '@sapphire/discord.js-utilities';
 
 export class PingCommand extends Command {

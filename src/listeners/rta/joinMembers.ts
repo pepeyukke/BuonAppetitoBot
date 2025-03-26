@@ -1,7 +1,7 @@
 import {Listener} from "@sapphire/framework";
 import {EmbedBuilder, GuildMember} from "discord.js";
-import config from "../../config.json";
-import {logger} from "../utils/logs";
+import config from "../../../config.json";
+import {logger} from "../../utils/logs";
 
 export class JoinGuildMember extends Listener {
     public constructor(context: Listener.LoaderContext, options: Listener.Options) {

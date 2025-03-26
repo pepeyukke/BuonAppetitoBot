@@ -8,7 +8,7 @@ import {
     ActionRowBuilder,
     PermissionFlagsBits
 } from "discord.js";
-import {logger} from "../utils/logs";
+import {logger} from "../../utils/logs";
 
 @ApplyOptions<Command.Options>({
     name: "settings",
