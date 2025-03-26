@@ -60,18 +60,9 @@ async function start(): Promise<void> {
         roleId TEXT NOT NULL
     )
     `
-    const createSupportChannelTable = `
-    CREATE TABLE IF NOT EXISTS supportChannel
-    (
-        guildId TEXT NOT NULL,
-        channelId TEXT NOT NULL
-    )
-    `
-
     await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createModeratorRoleTable);
     await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createBumpRoleTable);
     await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createSupportRoleTable);
-    await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createSupportChannelTable);
 
     const token = process.env.BUON_APPETITO_TOKEN;
     if (!token) {
