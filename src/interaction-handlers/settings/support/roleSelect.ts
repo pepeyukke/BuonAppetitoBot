@@ -1,8 +1,8 @@
 import {ApplyOptions} from '@sapphire/decorators';
 import {InteractionHandler, InteractionHandlerTypes} from '@sapphire/framework';
 import {StringSelectMenuInteraction, MessageFlags} from 'discord.js';
-import {executeRunQuery} from "../utils/database";
-import {logger} from "../utils/logs";
+import {executeRunQuery} from "../../../utils/database";
+import {logger} from "../../../utils/logs";
 
 @ApplyOptions<InteractionHandler.Options>({
     interactionHandlerType: InteractionHandlerTypes.SelectMenu

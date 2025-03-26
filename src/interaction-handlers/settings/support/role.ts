@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
 import {ActionRowBuilder, ButtonInteraction, MessageFlags, RoleSelectMenuBuilder} from 'discord.js';
-import {logger} from "../utils/logs";
+import {logger} from "../../../utils/logs";
 
 @ApplyOptions<InteractionHandler.Options>({
 	interactionHandlerType: InteractionHandlerTypes.Button
