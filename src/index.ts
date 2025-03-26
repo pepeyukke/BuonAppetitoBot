@@ -86,5 +86,3 @@ async function start(): Promise<void> {
 }
 
 start();
-
-async function createTable(dbpath: string, query: string, tableName: string) {}
