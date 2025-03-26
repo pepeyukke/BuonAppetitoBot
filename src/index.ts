@@ -19,7 +19,7 @@ async function start(): Promise<void> {
         return logger.error(`Error failed creating directory: "${err}"`);
     }
 
-    const databaseFiles = ["settings.sqlite"];
+    const databaseFiles = ["settings.sqlite", "support.sqlite"];
     databaseFiles.forEach((fileName) => {
         try {
             const filePath = path.join(databaseDirectory, fileName);
@@ -53,9 +53,25 @@ async function start(): Promise<void> {
         roleId TEXT NOT NULL
     )
     `
+    const createSupportRoleTable = `
+    CREATE TABLE IF NOT EXISTS supportRole
+    (
+        guildId TEXT NOT NULL,
+        roleId TEXT NOT NULL
+    )
+    `
+    const createSupportChannelTable = `
+    CREATE TABLE IF NOT EXISTS supportChannel
+    (
+        guildId TEXT NOT NULL,
+        channelId TEXT NOT NULL
+    )
+    `
 
     await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createModeratorRoleTable);
     await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createBumpRoleTable);
+    await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createSupportRoleTable);
+    await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createSupportChannelTable);
 
     const token = process.env.BUON_APPETITO_TOKEN;
     if (!token) {
