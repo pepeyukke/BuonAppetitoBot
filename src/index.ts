@@ -60,9 +60,17 @@ async function start(): Promise<void> {
         roleId TEXT NOT NULL
     )
     `
+    const createPrivateChannelTable = `
+        CREATE TABLE IF NOT EXISTS privateChannel
+        (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        channelId TEXT NOT NULL
+        );
+    `
     await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createModeratorRoleTable);
     await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createBumpRoleTable);
     await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createSupportRoleTable);
+    await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createPrivateChannelTable);
 
     const token = process.env.BUON_APPETITO_TOKEN;
     if (!token) {
@@ -78,3 +86,5 @@ async function start(): Promise<void> {
 }
 
 start();
+
+async function createTable(dbpath: string, query: string, tableName: string) {}
