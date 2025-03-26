@@ -6,7 +6,7 @@ import {
     ButtonStyle,
     EmbedBuilder,
     MessageFlags,
-    StringSelectMenuInteraction, TextChannel
+    StringSelectMenuInteraction
 } from 'discord.js';
 import {logger} from "../../../utils/logs";
 
