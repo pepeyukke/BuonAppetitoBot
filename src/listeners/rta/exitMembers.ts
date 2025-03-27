@@ -24,6 +24,7 @@ export class ExitGuildMember extends Listener {
         const rtaTime = joinDate - date
         if(60 <= rtaTime) {
             logger.info(`Member(id: ${member.id}) is not RTA Player.`)
+            return
         }
 
         const embed = new EmbedBuilder()
