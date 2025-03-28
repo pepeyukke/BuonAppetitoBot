@@ -19,7 +19,7 @@ async function start(): Promise<void> {
         return logger.error(`Error failed creating directory: "${err}"`);
     }
 
-    const databaseFiles = ["settings.sqlite", "support.sqlite"];
+    const databaseFiles = ["general.sqlite", "support.sqlite"];
     databaseFiles.forEach((fileName) => {
         try {
             const filePath = path.join(databaseDirectory, fileName);
@@ -60,17 +60,19 @@ async function start(): Promise<void> {
         roleId TEXT NOT NULL
     )
     `
-    const createPrivateChannelTable = `
-        CREATE TABLE IF NOT EXISTS privateChannel
+    const createSupportChannelTable = `
+        CREATE TABLE IF NOT EXISTS supportChannel
         (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        channelId TEXT NOT NULL
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            guildId TEXT NOT NULL,
+            channelId TEXT,
+            userId TEXT NOT NULL
         );
     `
-    await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createModeratorRoleTable);
-    await executeRunQuery(path.join(databaseDirectory, "settings.sqlite"), createBumpRoleTable);
+    await executeRunQuery(path.join(databaseDirectory, "general.sqlite"), createModeratorRoleTable);
+    await executeRunQuery(path.join(databaseDirectory, "general.sqlite"), createBumpRoleTable);
     await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createSupportRoleTable);
-    await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createPrivateChannelTable);
+    await executeRunQuery(path.join(databaseDirectory, "support.sqlite"), createSupportChannelTable);
 
     const token = process.env.BUON_APPETITO_TOKEN;
     if (!token) {
