@@ -21,7 +21,7 @@ export class ExitGuildMember extends Listener {
             logger.error(`Can't get Member(id: ${member.id}) join time.`)
             return
         }
-        const rtaTime = joinDate - date
+        const rtaTime = (date - joinDate) / 1000
         if(60 <= rtaTime) {
             logger.info(`Member(id: ${member.id}) is not RTA Player.`)
             return
@@ -33,7 +33,7 @@ export class ExitGuildMember extends Listener {
             .setTitle("即抜けRTA!")
             .addFields(
                 {name: "走者: ", value: `${member.displayName}(id: ${member.id})`},
-                {name: "記録: ", value: `${(date - joinDate) / 1000}秒！`},
+                {name: "記録: ", value: `${rtaTime}秒！`},
                 {name: "参加時刻/退出時刻", value: `${date2Timestamp(joinDate, "T")}/${date2Timestamp(date, "T")}`}
             )
 
