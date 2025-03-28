@@ -34,7 +34,7 @@ export class UserEvent extends Listener {
                 WHERE guildId = ?;
             `
 
-            const row = await executeGetQuery("../database/settings.sqlite", roleQuery, [message.guildId]);
+            const row = await executeGetQuery("../database/general.sqlite", roleQuery, [message.guildId]);
 
             if (!row.id) return;
 

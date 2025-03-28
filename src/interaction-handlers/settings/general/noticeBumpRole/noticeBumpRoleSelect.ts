@@ -18,8 +18,8 @@ export class MenuHandler extends InteractionHandler {
 			VALUES (?, ?);
 		`
 		try {
-			await executeRunQuery("../database/settings.sqlite", deleteQuery, [interaction.guildId]);
-			await executeRunQuery("../database/settings.sqlite", insertQuery, [interaction.guildId, interaction.values[0]]);
+			await executeRunQuery("../database/general.sqlite", deleteQuery, [interaction.guildId]);
+			await executeRunQuery("../database/general.sqlite", insertQuery, [interaction.guildId, interaction.values[0]]);
 
 			await interaction.reply({
 				content: `<@&${interaction.values[0]}>を通知ロールとして設定しました。`,
