@@ -1,6 +1,6 @@
 # BuonAppetitoBot
 ## 概要
-このBotは、Discordサーバー「ぺぺ鯖: New Horizons」専用に開発された多機能Botです。サーバー管理のサポートや便利な機能を追加します。
+このBotは、Discordサーバー「ぺぺ鯖: Old Horizons」専用に開発された多機能Botです。サーバー管理のサポートや便利な機能を追加します。
 ## 主な機能
 ### Disboard Bump通知
 - Disboardのbumpが可能になると、指定されたロールをメンションします。bumpが可能な際にワンボタンで実行できます。
