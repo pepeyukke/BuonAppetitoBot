@@ -6,7 +6,7 @@
 ### オリジナルからの機能
 - Bump通知
 - welcome messege
-- dipRTA (Experimental)
+- dipRTA 
 - messege observe
 - ping
 - avatars
@@ -19,3 +19,4 @@
 - High Quality Music Player
 - Server Backup
 - AI Chat(OpenAI) (Experimental)
+- Embed Create Command
