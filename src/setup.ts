@@ -40,6 +40,7 @@ export async function setup() {
 
     const createModeratorRoleTable = await readFile(path.join(sqlDirectory, "createModeratorRoleTable.sql"));
     const createBumpRoleTable = await readFile(path.join(sqlDirectory, "createBumpRoleTable.sql"));
+    const createNgWordsTable = await readFile(path.join(sqlDirectory, "createNgWordsTable.sql"));
     const createSupportRoleTable = await readFile(path.join(sqlDirectory, "createSupportRoleTable.sql"));
     const createSupportChannelTable = await readFile(path.join(sqlDirectory, "createSupportChannelTable.sql"));
 
@@ -49,6 +50,11 @@ export async function setup() {
     if (createBumpRoleTable) {
         await executeRunQuery(generalDatabasePath, createBumpRoleTable);
     }
+    // --- 追加 ---
+    if (createNgWordsTable) {
+        await executeRunQuery(generalDatabasePath, createNgWordsTable);
+    }
+    // --- 追加終 ---
     if (createSupportRoleTable) {
         await executeRunQuery(supportDatabasePath, createSupportRoleTable);
     }
