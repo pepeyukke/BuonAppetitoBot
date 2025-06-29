@@ -12,3 +12,8 @@
 - avatars
 - settings ui
 ## BuonAppetito2での新機能
+- Temp VC
+- Automod V2 
+- Automod Sync
+- Fulfilling settings ui
+- High Quality Music Player
