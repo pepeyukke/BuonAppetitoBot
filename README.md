@@ -17,4 +17,5 @@
 - Automod Sync
 - Fulfilling settings ui
 - High Quality Music Player
-- We're going to implement one big feature here....
+- Server Backup
+- AI Chat(OpenAI) (Experimental)
