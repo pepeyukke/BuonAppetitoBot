@@ -18,6 +18,17 @@ export async function setup() {
         return logger.error(`Error failed creating directory: "${err}"`);
     }
 
+    // バックアップファイル保存用ディレクトリの作成
+    const backupDirectory = path.join(__dirname, "../backups");
+     try {
+        if (!fs.existsSync(backupDirectory)) {
+            fs.mkdirSync(backupDirectory);
+            logger.info(`Created directory: ${backupDirectory}`);
+        }
+    } catch (err) {
+        return logger.error(`Error failed creating backup directory: "${err}"`);
+    }
+
     const databaseFiles = ["general.sqlite", "support.sqlite"];
     for (const fileName of databaseFiles) {
         const filePath = path.join(databaseDirectory, fileName)
@@ -43,23 +54,14 @@ export async function setup() {
     const createSupportRoleTable = await readFile(path.join(sqlDirectory, "createSupportRoleTable.sql"));
     const createSupportChannelTable = await readFile(path.join(sqlDirectory, "createSupportChannelTable.sql"));
     const createTempVoiceTable = await readFile(path.join(sqlDirectory, "createTempVoiceTable.sql"));
+    const createBackupsTable = await readFile(path.join(sqlDirectory, "createBackupsTable.sql")); // 追加
 
-    if (createModeratorRoleTable) {
-        await executeRunQuery(generalDatabasePath, createModeratorRoleTable);
-    }
-    if (createBumpRoleTable) {
-        await executeRunQuery(generalDatabasePath, createBumpRoleTable);
-    }
-    if (createSupportRoleTable) {
-        await executeRunQuery(supportDatabasePath, createSupportRoleTable);
-    }
-    if (createSupportChannelTable) {
-        await executeRunQuery(supportDatabasePath, createSupportChannelTable);
-    }
-    if (createTempVoiceTable) {
-        await executeRunQuery(generalDatabasePath, createTempVoiceTable);
-    }
-
+    if (createModeratorRoleTable) await executeRunQuery(generalDatabasePath, createModeratorRoleTable);
+    if (createBumpRoleTable) await executeRunQuery(generalDatabasePath, createBumpRoleTable);
+    if (createSupportRoleTable) await executeRunQuery(supportDatabasePath, createSupportRoleTable);
+    if (createSupportChannelTable) await executeRunQuery(supportDatabasePath, createSupportChannelTable);
+    if (createTempVoiceTable) await executeRunQuery(generalDatabasePath, createTempVoiceTable);
+    if (createBackupsTable) await executeRunQuery(generalDatabasePath, createBackupsTable); // 追加
 
     return logger.info("Setup completed");
 }
