@@ -11,14 +11,11 @@ export async function setup() {
         if (!fs.existsSync(databaseDirectory)) {
             fs.mkdirSync(databaseDirectory);
             logger.info(`Created directory: ${databaseDirectory}`);
-        } else {
-            logger.info(`Directory already exists: ${databaseDirectory}`);
         }
     } catch (err) {
         return logger.error(`Error failed creating directory: "${err}"`);
     }
 
-    // バックアップファイル保存用ディレクトリの作成
     const backupDirectory = path.join(__dirname, "../backups");
      try {
         if (!fs.existsSync(backupDirectory)) {
@@ -40,8 +37,6 @@ export async function setup() {
             });
             db.close();
             logger.info(`Created database: ${filePath}`);
-        } else {
-            logger.info(`Database already exists: ${filePath}`);
         }
     }
 
@@ -54,14 +49,16 @@ export async function setup() {
     const createSupportRoleTable = await readFile(path.join(sqlDirectory, "createSupportRoleTable.sql"));
     const createSupportChannelTable = await readFile(path.join(sqlDirectory, "createSupportChannelTable.sql"));
     const createTempVoiceTable = await readFile(path.join(sqlDirectory, "createTempVoiceTable.sql"));
-    const createBackupsTable = await readFile(path.join(sqlDirectory, "createBackupsTable.sql")); // 追加
+    const createBackupsTable = await readFile(path.join(sqlDirectory, "createBackupsTable.sql"));
+    const createAutoRoleTable = await readFile(path.join(sqlDirectory, "createAutoRoleTable.sql")); // 追加
 
     if (createModeratorRoleTable) await executeRunQuery(generalDatabasePath, createModeratorRoleTable);
     if (createBumpRoleTable) await executeRunQuery(generalDatabasePath, createBumpRoleTable);
     if (createSupportRoleTable) await executeRunQuery(supportDatabasePath, createSupportRoleTable);
     if (createSupportChannelTable) await executeRunQuery(supportDatabasePath, createSupportChannelTable);
     if (createTempVoiceTable) await executeRunQuery(generalDatabasePath, createTempVoiceTable);
-    if (createBackupsTable) await executeRunQuery(generalDatabasePath, createBackupsTable); // 追加
+    if (createBackupsTable) await executeRunQuery(generalDatabasePath, createBackupsTable);
+    if (createAutoRoleTable) await executeRunQuery(generalDatabasePath, createAutoRoleTable); // 追加
 
     return logger.info("Setup completed");
 }

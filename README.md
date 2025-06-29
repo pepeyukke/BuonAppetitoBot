@@ -20,3 +20,4 @@
 - Server Backup
 - AI Chat(OpenAI) (Experimental)
 - Embed Create Command
+- join add role
